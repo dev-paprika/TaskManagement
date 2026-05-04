@@ -16,7 +16,9 @@ Trello風のカンバンボード型タスク管理Webアプリ。
 
 ## ドキュメント
 
-- [要件定義書](docs/requirements.md) — 機能要件・画面設計・データ設計
+- [要件定義書](docs/requirements.md) — 機能要件・非機能要件・ユースケース
+- [画面設計書](docs/screen-design.md) — ワイヤーフレーム・画面遷移図
+- [DB設計書](docs/database-design.md) — ER図・テーブル定義
 
 ## よく使うコマンド
 
@@ -37,7 +39,9 @@ src/
 ├── lib/              # Supabaseクライアントなどユーティリティ
 └── types/            # TypeScript 型定義
 docs/
-├── requirements.md   # 要件定義書
+├── requirements.md      # 要件定義書
+├── screen-design.md     # 画面設計書
+└── database-design.md   # DB設計書
 ```
 
 ## 環境変数

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow — プロトタイプ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div id="screen-login" class="screen active">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <h1>TaskFlow</h1>
+      </div>
+      <p class="auth-subtitle">タスクをスマートに管理しよう</p>
+
+      <div id="login-error" class="error-msg">
+        ❌ メールアドレスまたはパスワードが正しくありません
+      </div>
+
+      <div class="form-group">
+        <label for="login-email">メールアドレス</label>
+        <input type="email" id="login-email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="login-password">パスワード</label>
+        <input type="password" id="login-password" placeholder="••••••••">
+      </div>
+
+      <button class="btn-primary" onclick="doLogin()">ログイン</button>
+
+      <p class="auth-link">
+        アカウントをお持ちでない方は<a href="#" onclick="showScreen('signup')">こちら</a>
+      </p>
+      <p class="auth-link auth-demo-note">
+        ※ デモ用: 任意のメール＋8文字以上のパスワードで入れます
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== SIGNUP SCREEN ===== -->
+  <div id="screen-signup" class="screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <h1>TaskFlow</h1>
+      </div>
+      <p class="auth-subtitle">アカウント作成</p>
+
+      <div id="signup-error" class="error-msg"></div>
+
+      <div class="form-group">
+        <label for="signup-email">メールアドレス</label>
+        <input type="email" id="signup-email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="signup-password">パスワード（8文字以上）</label>
+        <input type="password" id="signup-password" placeholder="••••••••">
+      </div>
+      <div class="form-group">
+        <label for="signup-password2">パスワード（確認）</label>
+        <input type="password" id="signup-password2" placeholder="••••••••">
+      </div>
+
+      <button class="btn-primary" onclick="doSignup()">サインアップ</button>
+
+      <p class="auth-link">
+        すでにアカウントをお持ちの方は<a href="#" onclick="showScreen('login')">こちら</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== BOARD SCREEN ===== -->
+  <div id="screen-board" class="screen">
+
+    <header class="header">
+      <div class="header-logo">TaskFlow</div>
+      <div class="user-menu-wrap">
+        <button class="user-menu-btn" onclick="toggleUserMenu()">
+          <span id="user-email-display">user@example.com</span>
+          <span>▼</span>
+        </button>
+        <div class="user-menu-dropdown" id="user-menu-dropdown">
+          <button onclick="doLogout()">ログアウト</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="board-container">
+      <div class="board" id="board">
+        <!-- カラムはJavaScriptで動的に挿入される -->
+        <button class="add-column-btn" onclick="addColumn()">＋ カラム追加</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== CARD EDIT MODAL ===== -->
+  <div class="modal-overlay" id="modal-overlay" onclick="onOverlayClick(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>カードを編集</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-label">タイトル</p>
+        <input type="text" class="modal-title-input" id="modal-title-input" placeholder="タスクのタイトル">
+
+        <p class="modal-label">期限日</p>
+        <div class="modal-date-row">
+          <input type="date" class="modal-date-input" id="modal-date-input">
+          <button class="btn-clear-date" onclick="clearModalDate()">クリア</button>
+        </div>
+
+        <div class="tags-section">
+          <p class="modal-label">タグ</p>
+          <!-- 既存タグをクリックでON/OFF -->
+          <div id="modal-tag-suggestions" class="modal-tag-suggestions"></div>
+          <!-- 新しいタグを作成 -->
+          <div class="add-tag-row">
+            <input
+              type="text"
+              class="tag-input"
+              id="tag-input"
+              placeholder="新しいタグ名を入力"
+              onkeydown="onTagInputKey(event)"
+            >
+            <button class="btn-add-tag" onclick="addTagFromInput()">＋ 新規タグ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">キャンセル</button>
+        <button class="btn-save" onclick="saveCard()">保存</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CONFIRM DIALOG ===== -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-dialog">
+      <h3 id="confirm-title">確認</h3>
+      <p id="confirm-message"></p>
+      <div class="confirm-actions">
+        <button class="btn-cancel" onclick="closeConfirm()">キャンセル</button>
+        <button class="btn-danger" id="confirm-ok-btn">削除する</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
