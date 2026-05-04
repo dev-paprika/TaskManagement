@@ -75,7 +75,7 @@
 
 | カテゴリ | 技術 |
 |----------|------|
-| バックエンド | Spring Boot 3.x (Java 17) + Gradle |
+| バックエンド | Spring Boot 4.0.x (Java 25) + Gradle |
 | API | REST API + OpenAPI 3.0 (Swagger UI) |
 | 認証 | Spring Security + JWT |
 | フロントエンド | React 18 + TypeScript + Vite |
