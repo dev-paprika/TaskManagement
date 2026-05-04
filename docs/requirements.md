@@ -71,13 +71,17 @@
 
 ## 4. 技術スタック
 
-| カテゴリ | 技術 | 理由 |
-|----------|------|------|
-| フレームワーク | Next.js 14 (App Router) | フロント＋APIを1プロジェクトで管理。デプロイが簡単。 |
-| 言語 | TypeScript | 型安全にコードを書けるため、バグを早期発見できる |
-| スタイリング | Tailwind CSS | クラス名でUIを素早く組める |
-| ドラッグ＆ドロップ | dnd-kit | モダンで使いやすいD&Dライブラリ |
-| 認証・DB | Supabase | 無料枠あり。認証＋PostgreSQLをホスト不要で使える |
+→ 詳細は [技術スタック定義書](techstack.md) を参照。
+
+| カテゴリ | 技術 |
+|----------|------|
+| バックエンド | Spring Boot 3.x (Java 17) + Gradle |
+| API | REST API + OpenAPI 3.0 (Swagger UI) |
+| 認証 | Spring Security + JWT |
+| フロントエンド | React 18 + TypeScript + Vite |
+| スタイリング | Tailwind CSS |
+| ドラッグ＆ドロップ | dnd-kit |
+| データベース | PostgreSQL |
 
 ---
 

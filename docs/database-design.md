@@ -9,7 +9,7 @@
 ## 1. ER図（概念）
 
 ```
-auth.users (Supabaseが管理)
+users
     │
     │ 1:N
     ▼
@@ -28,12 +28,21 @@ card_tags
 
 ## 2. テーブル定義
 
+### `users` テーブル
+
+| カラム名 | 型 | 説明 |
+|----------|----|------|
+| id | uuid (PK) | ユーザーの一意ID |
+| email | text (UNIQUE NOT NULL) | メールアドレス（ログインID） |
+| password_hash | text (NOT NULL) | bcrypt でハッシュ化されたパスワード |
+| created_at | timestamptz | 作成日時 |
+
 ### `columns` テーブル
 
 | カラム名 | 型 | 説明 |
 |----------|----|------|
 | id | uuid (PK) | カラムの一意ID |
-| user_id | uuid (FK → auth.users) | 所有ユーザーのID |
+| user_id | uuid (FK → users.id) | 所有ユーザーのID |
 | name | text | カラム名（例: "Todo"） |
 | position | int | 表示順（0始まり） |
 | created_at | timestamptz | 作成日時 |
@@ -66,11 +75,11 @@ card_tags
 ## 3. 制約・セキュリティ
 
 **削除の連鎖:**
+- `users` 削除時、紐づく `columns` は `ON DELETE CASCADE` で自動削除
 - `columns` 削除時、紐づく `cards` は `ON DELETE CASCADE` で自動削除
 - `cards` 削除時、紐づく `card_tags` も `ON DELETE CASCADE` で自動削除
 
-**Row Level Security (RLS):**
-- Supabase の RLS を全テーブルで有効化
-- `columns`: `user_id = auth.uid()` の行のみ操作可能
-- `cards`: カラム経由で同一ユーザーのみアクセス可能
-- `card_tags`: カード経由で同一ユーザーのみアクセス可能
+**認可（Spring Security）:**
+- 全 API エンドポイントは JWT による認証を必須とする
+- バックエンドの Service 層で `user_id` を JWT から取得し、自分のデータのみ操作できることを検証する
+- 他ユーザーのリソースへのアクセスは `403 Forbidden` を返す
